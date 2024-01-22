@@ -69,6 +69,17 @@ then
     #     echo "Skipping...";
     # fi
 
+    # Checking internet access
+    checkInternet=$(ping -c 2 1.1.1.1);
+    if [[ ${checkInternet} -eq 0 ]];
+    then
+        echo "Confirm internet connectivity :D";
+        echo "Proceeding!!!!";
+    else
+        echo "Cannot confirm internet connectivity :(";
+        echo "Will attempt customization, but likely to fail...";
+    fi
+
     # Update expired Kali Linux keys on a Debian12 base-build image
     echo "Adding expired Kali Linux keys on this Debian Linux plain build";
     
@@ -101,11 +112,41 @@ then
             echo "Proceeding to apt update && apt upgrade!";
 
             # apt update && apt upgrade
-            apt update && apt upgrade;
+            apt-get update && apt-get -y upgrade;
+            if [[ ${?} -eq 0 ]];
+            then
+                # If SUCCEEDED apt update & apt upgrade 
+                # APT Repository already becomes Kali!!
+                # Proceed apt autoremove to remove obsolete apt resources
+                echo "Cleaning up APT!";
+                apt autoremove -y;
+                if [[ ${?} -eq 0 ]];
+                then
+                    echo "Succeeded in cleaning up APT trash :D";
+                    echo "Proceeding to apt-get update && apt-get -y upgrade; the 2nd time";
+                fi
+
+                apt-get update && apt-get -y upgrade;
+                if [[ ${?} -eq 0 ]];
+                then
+                    echo "Succeeded in apt-get update && apt-get -y upgrade";
+                    echo "Proceeding 2nd time apt autoremove...";
+                    apt autoremove -y;
+
+                    if [[ ${?} -eq 0 ]];
+                    then
+                        echo "Succeeded in 2nd time APT clean up :D";
+                        echo "Proceeding to install tones of Attack tools :D";
+
+                else
+                    echo "Failed 2nd time to apt-get update && apt-get -y upgrade";
+                    echo "No worries :) We'll try to breakthrough though :D";
+                fi
+
                            
             if [[ ${?} -eq 0]];
             then
-                echo "Congrats! Your Debian has become a Kali Linux now :D!";
+                echo "Congrats! Your Debian has now become a Kali Linux now :D!";
                 echo "Continuing to Install Open-source hacking tools :D!";
 
                 # Start installing tones of customized hacking tools
