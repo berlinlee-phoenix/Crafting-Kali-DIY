@@ -4,63 +4,70 @@
 rootID='0';
 
 if [[ ${UID} -ne ${rootID} ]];
-    then 
-        echo "Sorry, you aren't ROOT!";
-        exit 1;
-else
+then 
+    echo "Sorry, you aren't ROOT!";
+    exit 1;
+elif [[ ${UID} -eq ${rootID} ]];
+then
     # If user's UID='0' = ROOT => Continue
 
-    # Ask whether add a new NIC
-    read -p "Do you wanna configure a new NIC? [Y/N]" newNIC;
-    if [[ ${newNIC} -eq 'Y' ]] || [[ ${newNIC} -eq 'y' ]];
-    then 
-        echo "Alright! Adding a new NIC for you!";
-        read -p "Enter NIC name for NAT: [ens33]" nicName;
-        read -p "Confirm NIC name for NAT: [ens33]" confirmNicName;
-        if [[ ${nicName} -eq ${confirmNicName} ]];
-        then
-            echo "Proceeding...";
-            read -p "Enter ${nicName}'s IP [192.168.0.18]: " nicIP;
-            read -p "Enter ${nicName}'s netmask: [255.255.255.0]" nicNetmask;
-            read -p "Enter ${nicName}'s gateway: [192.168.0.1]" nicGateway;
-            read -p "Enter ${nicName}'s network address: [192.168.0.0]" nicNetwork;
-        else
-            echo "NAT nic name ${nicName} does NOT MATCH ${confirmNicName}";
-            echo "Please re-enter NAT nic name...";
-            read -p "Enter NIC name for NAT: [ens33]" nicName;
-            read -p "Confirm NIC name for NAT: [ens33]" confirmNicName;
+    # # Ask whether add a new NIC
+    # read -p "Do you wanna configure a new NIC? [Y/N]" newNIC;
+    # if [[ ${newNIC} -eq 'Y' ]] || [[ ${newNIC} -eq 'y' ]];
+    # then 
+    #     echo "Alright! Adding a new NIC for you!";
+    #     read -p "Enter NIC name for NAT: [ens33]" nicName;
+    #     read -p "Confirm NIC name for NAT: [ens33]" confirmNicName;
+    #     if [[ ${nicName} -eq ${confirmNicName} ]];
+    #     then
+    #         echo "Proceeding...";
+    #         read -p "Enter ${nicName}'s IP [192.168.0.18]: " nicIP;
+    #         read -p "Enter ${nicName}'s netmask: [255.255.255.0]" nicNetmask;
+    #         read -p "Enter ${nicName}'s gateway: [192.168.0.1]" nicGateway;
+    #         read -p "Enter ${nicName}'s network address: [192.168.0.0]" nicNetwork;
+    #     else
+    #         echo "NAT nic name ${nicName} does NOT MATCH ${confirmNicName}";
+    #         echo "Please re-enter NAT nic name...";
+    #         read -p "Enter NIC name for NAT: [ens33]" nicName;
+    #         read -p "Confirm NIC name for NAT: [ens33]" confirmNicName;
+    #     fi
         
-        # Adding NAT NIC
-        networkConfig='/etc/network/interfaces'
-        printf "auto ${nicName}\niface ${nicName} inet static\naddress ${nicIP}\nnetmask ${nicNetmask}\ngateway ${nicGateway}\nup route add -net ${nicNetwork} netmask ${nicNetmask} gw ${nicGateway}" >> ${networkConfig};
+    #     # Adding NAT NIC
+    #     networkConfig='/etc/network/interfaces'
+    #     printf "auto ${nicName}\niface ${nicName} inet static\naddress ${nicIP}\nnetmask ${nicNetmask}\ngateway ${nicGateway}\nup route add -net ${nicNetwork} netmask ${nicNetmask} gw ${nicGateway}" >> ${networkConfig};
         
-        if [[ ${?} -eq 0 ]]
-        then
-            echo "Successfully added new NIC into ${networkConfig}";
-            echo "Restarting networking services";
-            # Stop networking service
-            systemctl stop networking;
-            if [[ ${?} -eq 0 ]]
-            then
-                echo "Succeeded in stopping networking service";
-                echo "Starting networking service again...";
-                systemctl start networking;
-                if [[ ${?} -eq 0 ]]
-                then
-                    echo "Succeeded in starting networking service";
-                    echo "Succeeded in adding ${nicName}";
-                else
-                    echo "Failed to start networking service...";
-            else
-                echo "Failed to stop networking service...";
-                echo "Skipping networking service restart...";
-        else
-            echo "Failed to add new NIC into ${networkConfig}...";
-        fi
-    else
-        echo "NOT gonna add a new NIC :)";
-        echo "Skipping...";
-    fi
+    #     if [[ ${?} -eq 0 ]]
+    #     then
+    #         echo "Successfully added new NIC into ${networkConfig}";
+    #         echo "Restarting networking services";
+    #         # Stop networking service
+    #         systemctl stop networking;
+    #         if [[ ${?} -eq 0 ]]
+    #         then
+    #             echo "Succeeded in stopping networking service";
+    #             echo "Starting networking service again...";
+    #             systemctl start networking;
+    #             if [[ ${?} -eq 0 ]]
+    #             then
+    #                 echo "Succeeded in starting networking service";
+    #                 echo "Succeeded in adding ${nicName}";
+    #             else
+    #                 echo "Failed to start networking service...";
+    #             fi
+
+    #         else
+    #             echo "Failed to stop networking service...";
+    #             echo "Skipping networking service restart...";
+    #         fi
+
+    #     else
+    #         echo "Failed to add new NIC into ${networkConfig}...";
+    #     fi
+
+    # else
+    #     echo "NOT gonna add a new NIC :)";
+    #     echo "Skipping...";
+    # fi
 
     # Update expired Kali Linux keys on a Debian12 base-build image
     echo "Adding expired Kali Linux keys on this Debian Linux plain build";
@@ -251,6 +258,7 @@ else
                         echo "Succeeded in installing ${tool}";
                     else
                         echo "Failed to install ${tool}";
+                    fi
                 done
 
                 # Adding System variables to .profile in your Kernel
@@ -259,7 +267,13 @@ else
                 ## At the end of your .profile
                 targetTailProfile='export PATH=/usr/local/bin:/usr/bin:/usr/local/games:/usr/games: /sbin/'
                 checkPATH=$(tail -n 1 .profile);
-                if [[  ]]
+                if [[ ${targetTailProfile} -eq ${checkPath} ]];
+                then   
+                    echo "Succeeded in updating SYS PATH :D!";
+                else
+                    echo "Failed to update SYS PATH :(";
+                    echo "You have to update SYS PATH yourself :(";
+                fi
 
             else
                 echo "We feel sorry that your Debian did NOT become a Kali Linux :(";
