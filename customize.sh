@@ -56,9 +56,11 @@ else
                 echo "Skipping networking service restart...";
         else
             echo "Failed to add new NIC into ${networkConfig}...";
+        fi
     else
         echo "NOT gonna add a new NIC :)";
         echo "Skipping...";
+    fi
 
     # Update expired Kali Linux keys on a Debian12 base-build image
     echo "Adding expired Kali Linux keys on this Debian Linux plain build";
@@ -70,6 +72,7 @@ else
         echo "Succeeded in updating Kali Linux keys!";
     else
         echo "Failed to update Kali Linux keys...";
+    fi
 
     # Backup existing Debian repository
     aptPath='/etc/apt/sources.list';
@@ -92,14 +95,17 @@ else
 
             # apt update && apt upgrade
             apt update && apt upgrade;
-            
+                           
             if [[ ${?} -eq 0]];
             then
                 echo "Congrats! Your Debian has become a Kali Linux now :D!";
                 echo "Continuing to Install Open-source hacking tools :D!";
 
                 # Start installing tones of customized hacking tools
+                ## ifconfig must be added to sys variables
                 # net-tools (ifconfig)
+                ##
+                # VIM Editor
                 # mac-robber
                 # SNAP
                 # Git
@@ -120,6 +126,7 @@ else
                 ## First-time setup
                 # msfconsole
                 tools=('0trace'
+                        'vim'
                         'net-tools'
                         'galleta'
                         'gdb-peda'
@@ -245,24 +252,33 @@ else
                     else
                         echo "Failed to install ${tool}";
                 done
-                
 
-
+                # Adding System variables to .profile in your Kernel
+                printf "export PATH=$PATH: /sbin/" >> .profile;
+                ## You should SEE export PATH=/usr/local/bin:/usr/bin:/usr/local/games:/usr/games: /sbin/
+                ## At the end of your .profile
+                targetTailProfile='export PATH=/usr/local/bin:/usr/bin:/usr/local/games:/usr/games: /sbin/'
+                checkPATH=$(tail -n 1 .profile);
+                if [[  ]]
 
             else
                 echo "We feel sorry that your Debian did NOT become a Kali Linux :(";
                 # Terminate Customization here if failed to become a Kali linux
                 exit 1;
+            fi
 
         else
             echo "Failed to customize this Debian repo to Kali repo...";
             echo "Skipping...";
-
+        fi
 
     else
         echo "Failed to back up existing Apt repo";
         echo "Skipping Debian customization...";
-
-
+    fi
+fi
+echo "Succeeded in completing this script";
+echo "Exiting with 0...";
+exit 0;
 
 
