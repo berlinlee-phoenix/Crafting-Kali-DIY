@@ -80,6 +80,49 @@ then
         echo "Will attempt customization, but likely to fail...";
     fi
 
+    # Create /home/root
+    user=$(whoami);
+    mkdir /home/${user};
+    if [[ ${?} -eq 0 ]];
+    then
+        echo "Succeeded in creating /home/${user}";
+    else
+        echo "Failed to create /home/${user}";
+    fi
+
+    # Create /home/root/Desktop
+    mkdir /home/${user}/Desktop;
+    if [[ ${?} -eq 0 ]];
+    then
+        echo "Succeeded in creating /home/${user}/Desktop";
+    else
+        echo "Failed to create /home/${user}/Desktop";
+    fi
+
+    # Create /home/root/Downloads
+    mkdir /home/${user}/Downloads;
+    if [[ ${?} -eq 0 ]];
+    then
+        echo "Succeeded in creating /home/${user}/Downloads";
+    else
+        echo "Failed to create /home/${user}/Downloads";
+    fi
+
+    # Update Debian login page to a less scary image
+    # Download Anonymous .jpg
+    anonymousImage='https://media.wnyc.org/i/800/0/l/85/1/we-are-anonymous.jpg'
+    cd /home/${user}/Downloads && wget ${anonymousImage};
+    if [[ ${?} -eq 0 ]];
+    then
+        anonymousImagePath="/home/${user}/Downloads/we-are-anonymous.jpg";
+        echo "Succeeded in downloading Anonymous Image :D";
+        echo "Proceeding to change Debian profile :D";
+        # Change Debian profile image
+
+    else
+        echo "Failed to download Anonymous Image :(";
+    fi
+
     # Update expired Kali Linux keys on a Debian12 base-build image
     echo "Adding expired Kali Linux keys on this Debian Linux plain build";
     
@@ -174,8 +217,128 @@ then
                 ## First-time setup
                 # msfconsole
                 tools=('0trace'
+                        'openssh-server'
+                        'tcpdump'
+                        'docker.io'
+                        'kaboxer'
+                        'xdg-utils'
                         'vim'
                         'net-tools'
+                        'libc6'
+                        'libgcc-s1'
+                        'libstdc++6'
+                        'aesfix'
+                        'aeskeyfind'
+                        'libafflib0v5'
+                        'libc6'
+                        'libexpat1'
+                        'libfuse2'
+                        'libgcc-s1'
+                        'libssl3'
+                        'libstdc++6'
+                        'afflib-tools'
+                        'libafflib0v5'
+                        'libafflib-dev'
+                        'build-essential'
+                        'clang'
+                        'clang-14'
+                        'libc6'
+                        'libgcc-s1'
+                        'libpython3.11'
+                        'libstdc++6'
+                        'procps'
+                        'afl++'
+                        'afl++-doc'
+                        'graphviz'
+                        'python3'
+                        'aircrack-ng'
+                        'bash'
+                        'gawk'
+                        'iproute2'
+                        'iw'
+                        'pciutils'
+                        'procps'
+                        'tmux'
+                        'xterm'
+                        'airserv-ng'
+                        'airodump-ng'
+                        'airmon-ng'
+                        'python3-dnspython'
+                        'python3-termcolor'
+                        'python3-tldextraact'
+                        'altdns'
+                        'libc6'
+                        'amap'
+                        'amass-common'
+                        'libc6'
+                        'amass'
+                        'android-sdk-build-tools'
+                        'android-sdk-common'
+                        'android-sdk-platform-tools'
+                        'proguard-cli'
+                        'android-sdk'
+                        'apache2-bin'
+                        'apache2-data'
+                        'apache2-utils'
+                        'init-system-helpers'
+                        'media-types'
+                        'perl'
+                        'procps'
+                        'apache2'
+                        'aapt'
+                        'android-framework-res'
+                        'default-jre-headless'
+                        'ava8-runtime-headless'
+                        'libantlr3-runtime-java'
+                        'libcommons-cli-java'
+                        'libcommons-io-java'
+                        'libcommons-lang3-java'
+                        'libcommons-text-java'
+                        'libguava-java'
+                        'libsmali-java'
+                        'libstringtemplate-java'
+                        'libxmlunit-java'
+                        'libxpp3-java'
+                        'libyaml-snake-java'
+                        'apktool'
+                        'kali-defaults'
+                        'python3-bluez'
+                        'python3-bs4'
+                        'python3-ctypescrypto'
+                        'python3-fleep'
+                        'python3-libarchive-c'
+                        'python3-netifaces'
+                        'python3-pil'
+                        'python3-prettytable'
+                        'python3-pycryptodome'
+                        'python3-requests'
+                        'apple-bleee'
+                        'python3-dicttoxml'
+                        'python3-requests'
+                        'arjun'
+                        'openjdk-11-jre'
+                        'libc6'
+                        'libcap2'
+                        'libpcap0.8'
+                        'arp-scan'
+                        'libnet1'
+                        'libpcap0.8'
+                        'libseccomp2'
+                        'arping'
+                        'adduser'
+                        'gawk'
+                        'init-system-helpers'
+                        'libc6'
+                        'libpcap0.8'
+                        'lsb-base'
+                        'arpwatch'
+                        'libpcap0.8'
+                        'asleap'
+                        'assetfinder'
+                        'libreadline8'
+                        'atftp'
+                        ''
+
                         'galleta'
                         'gdb-peda'
                         'gdisk'
@@ -207,6 +370,7 @@ then
                         'asleap'
                         'assetfinder'
                         'atftp'
+                        'aflplusplus'
                         'autopsy'
                         'axel'
                         'b374k'
@@ -265,11 +429,19 @@ then
                         'code-oss'
                         'colly'
                         'command-not-found'
-                        'ifconfig'
-                        ''
+                        'commix'
+                        'copy-router-config'
+                        'cosign'
+                        'covenant-kbx'
+                        'cowpatty'
+                        'make'
+                        'crack-common'
+                        'libc6'
+                        'libcrypt1'
+                        'make'
                         'libavcodec60'
                         'libavformat60'
-                        'aflplusplus'
+                        
 
                         'mac-robber' 
                         'snapd' 
@@ -315,6 +487,50 @@ then
                     echo "Failed to update SYS PATH :(";
                     echo "You have to update SYS PATH yourself :(";
                 fi
+
+                # Add back all Debian repositories after turning Debian into Kali
+                printf "\n\ndeb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware\ndeb-src https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware\n\ndeb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware\ndeb-src https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware\n\ndeb https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware\ndeb-src https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware\n\ndeb https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware\ndeb-src https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware\n\ndeb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware\ndeb-src https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware" >> ${aptPath};
+
+                if [[ ${?} -eq 0 ]];
+                then
+                    echo "Succeeded in adding back Debian repositories! :D";
+                    echo "Proceeding to final apt update && apt -y upgrade!! :D";
+                    
+                    apt update && apt -y upgrade;
+
+                    if [[ ${?} -eq 0 ]];
+                    then
+                        echo "Succeeded in apt update && apt -y upgrade :D";
+                        echo "Proceeding to apt autoremove -y;";
+                        apt autoremove -y;
+                        if [[ ${?} -eq 0 ]];
+                        then
+                            echo "Succeeded in APT clean up :D";
+                            echo "apt update && apt -y upgrade again :D";
+                            apt update && apt -y upgrade;
+                            if [[ ${?} -eq 0 ]];
+                            then
+                                echo "Final apt update && apt -y upgrade OK!";
+                            else
+                                echo "Failed to last apt update && apt -y upgrade :(";
+                                echo "You may manually perform apt update && apt -y upgrade";
+                            fi
+                        else
+                            echo "Failed to APT clean up :(";
+                            echo "You may apt autoremove -y manually";
+                        fi
+                    else
+                        echo "Failed to apt update && apt -y upgrade after adding back Debian repositories :(";
+                        echo "You may apt update && apt -y upgrade manually :D";                        
+                    fi   
+                else
+                    echo "Failed to add back Debian repositories :(";
+                    echo "You may manually add back those :)";
+                fi
+                ##################################################
+                # Exit with 0 after all processes have completed
+                #################################################
+                exit 0;
 
             else
                 echo "We feel sorry that your Debian did NOT become a Kali Linux :(";
