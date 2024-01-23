@@ -133,6 +133,7 @@ then
         echo "Succeeded in updating Kali Linux keys!";
     else
         echo "Failed to update Kali Linux keys...";
+        exit 1;
     fi
 
     # Backup existing Debian repository
@@ -160,6 +161,7 @@ then
             then
                 # If SUCCEEDED apt update & apt upgrade 
                 # APT Repository already becomes Kali!!
+                echo "Succeeded in APT update => upgrade!:D";
                 # Proceed apt autoremove to remove obsolete apt resources
                 echo "Cleaning up APT!";
                 apt autoremove -y;
@@ -167,6 +169,9 @@ then
                 then
                     echo "Succeeded in cleaning up APT trash :D";
                     echo "Proceeding to apt-get update && apt-get -y upgrade; the 2nd time";
+                else
+                    echo "Failed to clean up ATPT trash :(";
+                    echo "Let's try to do APT update => upgrade again";
                 fi
 
                 apt-get update && apt-get -y upgrade;
@@ -185,6 +190,9 @@ then
                     echo "Failed 2nd time to apt-get update && apt-get -y upgrade";
                     echo "No worries :) We'll try to breakthrough though :D";
                 fi
+            else
+                echo "Failed to upgrade to Kali linux :(";
+                exit 1;
 
                            
             if [[ ${?} -eq 0]];
@@ -546,6 +554,7 @@ then
     else
         echo "Failed to back up existing Apt repo";
         echo "Skipping Debian customization...";
+        exit 1;
     fi
 fi
 echo "Succeeded in completing this script";
