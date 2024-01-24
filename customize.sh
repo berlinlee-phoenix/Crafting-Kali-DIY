@@ -150,7 +150,7 @@ then
         echo "Succeeded in backing up existing Apt repo";
         echo "Proceeding to change Apt repo to Kali repo!";
         printf "deb https://http.kali.org/kali kali-rolling main non-free contrib\ndeb-src https://http.kali.org/kali kali-rolling main non-free contrib" > ${aptPath};
-        if [[ ${?} -eq 0 ]]
+        if [[ ${?} -eq 0 ]];
         then
             echo "Succeeded in customizing this Debian repo to Kali repo!";
             echo "Proceeding to apt update && apt upgrade!";
@@ -1548,7 +1548,7 @@ then
                 do
                     echo "Installing tool: ${tool}";
                     installTools=$(apt install ${tool} -y);
-                    if [[ @{?} -eq 0 ]];
+                    if [[ ${?} -eq 0 ]];
                     then
                         echo "Succeeded in installing ${tool}";
                     else
