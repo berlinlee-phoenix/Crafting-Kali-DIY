@@ -140,7 +140,7 @@ then
     echo "Current Debian Apt Repository: ";
     cat ${aptPath};
     echo "Backup existing Apt repository before making it to Kali repo...";
-    cp ${aptSource} ${aptBackup};
+    cp ${aptPath} ${aptBackup};
     if [[ ${?} -eq 0 ]];
     then
         echo "Succeeded in backing up existing Apt repo";
