@@ -153,7 +153,7 @@ then
 
             # apt update && apt upgrade
             apt-get update && apt-get -y upgrade;
-            if [[ ${?} -eq 0 ]];
+            if [[ ${?} -eq 0 ]] || [[ ${?} -eq 100 ]];
             then
                 # If SUCCEEDED apt update & apt upgrade 
                 # APT Repository already becomes Kali!!
@@ -191,7 +191,6 @@ then
                 fi
             else
                 echo "Failed to upgrade to Kali linux :(";
-                exit 1;
             fi
 
             # 1st time apt update && apt -y upgrade 
@@ -1627,19 +1626,16 @@ then
             else
                 echo "We feel sorry that your Debian did NOT become a Kali Linux :(";
                 # Terminate Customization here if failed to become a Kali linux
-                exit 1;
             fi
 
         else
             echo "Failed to customize this Debian repo to Kali repo...";
             echo "Exiting...";
-            exit 1;
         fi
 
     else
         echo "Failed to back up existing Apt repo";
         echo "Skipping Debian customization...";
-        exit 1;
     fi
 else
     echo "You aren't ROOT";
