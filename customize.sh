@@ -1556,6 +1556,17 @@ then
                     fi
                 done
 
+                userProfile=$(find / -name '.profile' 2>/dev/null | tail -n 1);
+                copyProfile=$(cat ${userProfile} > /home/${user}/.profile);
+                if [[ ${?} -eq 0 ]];
+                then
+                    echo "Succeeded in copying a normal user profile to ${user}'s profile";
+                    echo "${user}'s profile is in /home/${user}/.profile";
+                    echo "Content of ${user}'s .profile is:";
+                    cat /home/${user}/.profile;
+                else
+                    echo "Failed to copy a normal user profile to ${user}'s profile";
+                fi
                 # Adding System variables to .profile in your Kernel
                 printf "export PATH=$PATH: /sbin/" >> .profile;
                 ## You should SEE export PATH=/usr/local/bin:/usr/bin:/usr/local/games:/usr/games: /sbin/
