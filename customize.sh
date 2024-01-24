@@ -107,7 +107,8 @@ then
     echo "======== START - Debian background theme============";
     # Update Debian login page to a less scary image
     # Download Anonymous .jpg
-    findImage=$(ls -la /home/${user}/Downloads | grep 'anonymous');
+    findImage=$(find /home/${user}/Downloads | grep 'anonymous');
+
     if [[ ${?} -ne 0 ]];
     then
         echo "========================";
@@ -121,7 +122,20 @@ then
             anonymousImagePath="/home/${user}/Downloads/we-are-anonymous.jpg";
             echo "Succeeded in downloading Anonymous Image :D";
             echo "Proceeding to change Debian profile :D";
+            imagePath='/usr/share/backgrounds/';
             # Change Debian profile image
+            cp $findImage $imagePath;
+            if [[ ${?} -eq 0 ]];
+            then
+                echo "Succeeded in adding a lock screen Image :D";
+                echo "Removing existing Kali Linux lock screen images";
+                lockScreen='/usr/share/backgrounds/';
+                rm -rf $lockScreengnome
+                rm -rf $lockScreenkali
+                rm -rf $lockScreenkali*
+            else
+                echo "Failed to copy new image to lock screen image :(";
+            fi
         else
             echo "Failed to download Image";
             echo "Skipping...";
