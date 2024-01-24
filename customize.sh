@@ -346,8 +346,6 @@ then
                         'assetfinder'
                         'libreadline8'
                         'atftp'
-                        ''
-
                         'galleta'
                         'gdb-peda'
                         'gdisk'
@@ -1541,8 +1539,7 @@ then
                         'apt-transport-https' 
                         'software-properties-common' 
                         'lsb-release' 
-                        'postgresql'
-                        );
+                        'postgresql');
 
                 # Iterate through $tools[@] && Install each tool
                 for tool in ${tools[@]};
@@ -1624,6 +1621,8 @@ then
                 ##################################################
                 # Exit with 0 after all processes have completed
                 #################################################
+                echo "Succeeded in completing this script";
+                echo "Exiting with 0...";
                 exit 0;
 
             else
@@ -1643,10 +1642,7 @@ then
         echo "Skipping Debian customization...";
         exit 1;
     fi
-    
-echo "Succeeded in completing this script";
-echo "Exiting with 0...";
-exit 0;
+
 fi
 
 
