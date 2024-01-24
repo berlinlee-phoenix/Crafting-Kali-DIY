@@ -195,7 +195,7 @@ then
                 exit 1;
 
             # 1st time apt update && apt -y upgrade 
-            if [[ ${?} -eq 0]];
+            if [[ ${?} -eq 0 ]];
             then
                 echo "Congrats! Your Debian has now become a Kali Linux now :D!";
                 echo "Continuing to Install Open-source hacking tools :D!";
