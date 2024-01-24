@@ -240,12 +240,26 @@ then
             if [[ ${?} -eq 0 ]];
             then
                 echo "Congrats! Your Debian has now become a Kali Linux now :D!";
+                echo "Changing Kernel settings to disable Restart pop-ip in /etc/needrestart/needrestart.conf";
+                echo "To avoid Daemons Restart pop-up during Open-source attack tools installation";
+                restartConf='/etc/needrestart/needrestart.conf';
+                existingRestart=$(grep '$nrconf{restart}' ${restartConf});
+                targetRestart="\$nrconf{restart} = 'a'";
+                sed -i "s/$existingRestart/$targetRestart/g" $restartConf;
+                if [[ ${?} -eq 0 ]];
+                then
+                    echo "Succeeded in disabling Daemon pop-up before Tools installation";
+                else
+                    echo "Failed to disable Daemon pop-up";
+                    echo "Daemon alert may come up during Tools installation";
+                fi
+
                 echo "Continuing to Install Open-source hacking tools :D!";
                 echo "";
                 echo "======================================";
                 echo "======================================";
                 echo "";
-
+                
                 # Start installing tones of customized hacking tools
                 ## ifconfig must be added to sys variables
                 # net-tools (ifconfig)
