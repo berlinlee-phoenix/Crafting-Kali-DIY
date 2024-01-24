@@ -1643,9 +1643,11 @@ then
         echo "Skipping Debian customization...";
         exit 1;
     fi
-fi
+    
 echo "Succeeded in completing this script";
 echo "Exiting with 0...";
 exit 0;
+fi
+
 
 
