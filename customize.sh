@@ -193,6 +193,7 @@ then
             else
                 echo "Failed to upgrade to Kali linux :(";
                 exit 1;
+            fi
 
             # 1st time apt update && apt -y upgrade 
             if [[ ${?} -eq 0 ]];
