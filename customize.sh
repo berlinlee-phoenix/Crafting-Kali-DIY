@@ -3,12 +3,8 @@
 # Ensure script runner = ROOT
 rootID='0';
 
-if [[ ${UID} -ne ${rootID} ]];
+if [[ ${UID} -eq ${rootID} ]];
 then 
-    echo "Sorry, you aren't ROOT!";
-    exit 1;
-elif [[ ${UID} -eq ${rootID} ]];
-then
     # If user's UID='0' = ROOT => Continue
 
     # # Ask whether add a new NIC
@@ -185,7 +181,10 @@ then
                     then
                         echo "Succeeded in 2nd time APT clean up :D";
                         echo "Proceeding to install tones of Attack tools :D";
-
+                    else
+                        echo "Failed to clean up APT for 2nd time";
+                        echo "You may manually APT clean up";
+                    fi
                 else
                     echo "Failed 2nd time to apt-get update && apt-get -y upgrade";
                     echo "No worries :) We'll try to breakthrough though :D";
@@ -1642,8 +1641,7 @@ then
         echo "Skipping Debian customization...";
         exit 1;
     fi
-
+else
+    echo "You aren't ROOT";
+    echo "Exiting...";
 fi
-
-
-
