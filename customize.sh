@@ -104,31 +104,47 @@ then
         echo "Failed to create /home/${user}/Downloads";
     fi
 
+    echo "======== START - Debian background theme============";
     # Update Debian login page to a less scary image
     # Download Anonymous .jpg
-    anonymousImage='https://media.wnyc.org/i/800/0/l/85/1/we-are-anonymous.jpg'
-    cd /home/${user}/Downloads && wget ${anonymousImage};
-    if [[ ${?} -eq 0 ]];
+    findImage=$(ls -la /home/${user}/Downloads | grep 'anonymous');
+    if [[ ${?} -ne 0 ]];
     then
-        anonymousImagePath="/home/${user}/Downloads/we-are-anonymous.jpg";
-        echo "Succeeded in downloading Anonymous Image :D";
-        echo "Proceeding to change Debian profile :D";
-        # Change Debian profile image
+        echo "========================";
+        echo "========================";
+        echo "Cannot find Image, downloading...";
+        echo "";
+        anonymousImage='https://media.wnyc.org/i/800/0/l/85/1/we-are-anonymous.jpg'
+        cd /home/${user}/Downloads && wget ${anonymousImage};
+        if [[ ${?} -eq 0 ]];
+        then
+            anonymousImagePath="/home/${user}/Downloads/we-are-anonymous.jpg";
+            echo "Succeeded in downloading Anonymous Image :D";
+            echo "Proceeding to change Debian profile :D";
+            # Change Debian profile image
+        else
+            echo "Failed to download Image";
+            echo "Skipping...";
+            echo "========================";
+            echo "========================";
 
     else
-        echo "Failed to download Anonymous Image :(";
+        echo "Not downloading Anonymous Image :(";
     fi
+    echo "======== END - Debian background theme============";
 
     # Update expired Kali Linux keys on a Debian12 base-build image
-    echo "Adding expired Kali Linux keys on this Debian Linux plain build";
+    echo "============= Adding expired Kali Linux keys on this Debian Linux plain build =================";
     
     # Updating expired Kali Linux keys
     addKey=$(wget https://archive.kali.org/archive-key.asc -O /etc/apt/trusted.gpg.d/kali-archive-keyring.asc);
     if [[ ${?} -eq 0 ]];
     then
         echo "Succeeded in updating Kali Linux keys!";
+        echo "======================================";
     else
         echo "Failed to update Kali Linux keys...";
+        echo "======================================";
         exit 1;
     fi
 
@@ -138,18 +154,25 @@ then
     
     # Echo output of existing Apt Repository
     echo "Current Debian Apt Repository: ";
+    echo "";
     cat ${aptPath};
+    echo "";
+    echo "";
     echo "Backup existing Apt repository before making it to Kali repo...";
     cp ${aptPath} ${aptBackup};
     if [[ ${?} -eq 0 ]];
     then
         echo "Succeeded in backing up existing Apt repo";
         echo "Proceeding to change Apt repo to Kali repo!";
+        echo "";
+        echo "";
         printf "deb https://http.kali.org/kali kali-rolling main non-free contrib\ndeb-src https://http.kali.org/kali kali-rolling main non-free contrib" > ${aptPath};
         if [[ ${?} -eq 0 ]];
         then
             echo "Succeeded in customizing this Debian repo to Kali repo!";
             echo "Proceeding to apt update && apt upgrade!";
+            echo "";
+            echo "";
 
             # apt update && apt upgrade
             apt-get update && apt-get -y upgrade;
@@ -165,9 +188,14 @@ then
                 then
                     echo "Succeeded in cleaning up APT trash :D";
                     echo "Proceeding to apt-get update && apt-get -y upgrade; the 2nd time";
+                    echo "======================================";
+                    echo "======================================";
                 else
                     echo "Failed to clean up ATPT trash :(";
                     echo "Let's try to do APT update => upgrade again";
+                    echo "======================================";
+                    echo "======================================";
+                    echo "";
                 fi
 
                 apt-get update && apt-get -y upgrade;
@@ -175,19 +203,34 @@ then
                 then
                     echo "Succeeded in apt-get update && apt-get -y upgrade";
                     echo "Proceeding 2nd time apt autoremove...";
+                    echo "======================================";
+                    echo "======================================";
+                    echo "";
                     apt autoremove -y;
 
                     if [[ ${?} -eq 0 ]];
                     then
                         echo "Succeeded in 2nd time APT clean up :D";
                         echo "Proceeding to install tones of Attack tools :D";
+                        echo "";
+                        echo "======================================";
+                        echo "======================================";
+                        echo "";
                     else
                         echo "Failed to clean up APT for 2nd time";
                         echo "You may manually APT clean up";
+                        echo "";
+                        echo "======================================";
+                        echo "======================================";
+                        echo "";
                     fi
                 else
                     echo "Failed 2nd time to apt-get update && apt-get -y upgrade";
                     echo "No worries :) We'll try to breakthrough though :D";
+                    echo "";
+                    echo "======================================";
+                    echo "======================================";
+                    echo "";
                 fi
             else
                 echo "Failed to upgrade to Kali linux :(";
@@ -198,6 +241,10 @@ then
             then
                 echo "Congrats! Your Debian has now become a Kali Linux now :D!";
                 echo "Continuing to Install Open-source hacking tools :D!";
+                echo "";
+                echo "======================================";
+                echo "======================================";
+                echo "";
 
                 # Start installing tones of customized hacking tools
                 ## ifconfig must be added to sys variables
@@ -386,7 +433,6 @@ then
                         'kali-defaults'
                         'php-cli'
                         'b374k'
-
                         'curl'
                         'osslsigncode'
                         'python3'
@@ -1546,9 +1592,23 @@ then
                     installTools=$(apt install ${tool} -y);
                     if [[ ${?} -eq 0 ]];
                     then
+                        echo "======================================";
+                        echo "";
+                        echo "";
                         echo "Succeeded in installing ${tool}";
+                        echo "======================================";
+                        echo "======================================";
+                        echo "";
+                        echo "";
                     else
+                        echo "======================================";
+                        echo "";
+                        echo "";
                         echo "Failed to install ${tool}";
+                        echo "======================================";
+                        echo "======================================";
+                        echo "";
+                        echo "";
                     fi
                 done
 
@@ -1558,8 +1618,12 @@ then
                 then
                     echo "Succeeded in copying a normal user profile to ${user}'s profile";
                     echo "${user}'s profile is in /home/${user}/.profile";
+                    echo "=================================";
+                    echo "=================================";
                     echo "Content of ${user}'s .profile is:";
                     cat /home/${user}/.profile;
+                    echo "=================================";
+                    echo "=================================";
                 else
                     echo "Failed to copy a normal user profile to ${user}'s profile";
                 fi
@@ -1571,10 +1635,14 @@ then
                 checkPATH=$(tail -n 1 .profile);
                 if [[ ${targetTailProfile} -eq ${checkPath} ]];
                 then   
+                    echo "=================================";
                     echo "Succeeded in updating SYS PATH :D!";
+                    echo "=================================";
                 else
+                    echo "=================================";
                     echo "Failed to update SYS PATH :(";
                     echo "You have to update SYS PATH yourself :(";
+                    echo "=================================";
                 fi
 
                 # Add back all Debian repositories after turning Debian into Kali
@@ -1582,8 +1650,10 @@ then
 
                 if [[ ${?} -eq 0 ]];
                 then
+                    
                     echo "Succeeded in adding back Debian repositories! :D";
                     echo "Proceeding to final apt update && apt -y upgrade!! :D";
+
                     
                     apt update && apt -y upgrade;
 
