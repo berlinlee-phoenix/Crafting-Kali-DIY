@@ -127,6 +127,7 @@ then
             echo "Skipping...";
             echo "========================";
             echo "========================";
+        fi
 
     else
         echo "Not downloading Anonymous Image :(";
