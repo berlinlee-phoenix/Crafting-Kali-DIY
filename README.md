@@ -7,10 +7,10 @@
 ## git clone https://github.com/phoenixyork166/Crafting-Kali-DIY.git
 ##
 ## chmod 755 ./Crafting-Kali-DIY;
-## cd ./Crafting-Kali-DIY && chmod 777 ./*.*;
+## cd ./Crafting-Kali-DIY && chmod 777 ./*.sh;
 ## sudo bash customize.sh;
 ## 
 ## After reboot
 ## cd ./Crafting-Kali-DIY && sudo bash install-tools.sh;
 ##
-## This is extremely useful where you can only use a standard Debian in your workplace :D
+## This is extremely useful where you can only use a standard Debian in your workplace to hack the fuck out :D
