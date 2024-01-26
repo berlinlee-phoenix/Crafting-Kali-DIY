@@ -189,7 +189,8 @@ then
             echo "Proceeding to apt update && apt upgrade!";
             echo "";
 
-            # apt update && apt upgrade
+            # After changing Debian repository to Kali repository
+            # 1st time apt update && apt upgrade
             apt-get update && apt-get -y upgrade;
             if [[ ${?} -eq 0 ]] || [[ ${?} -eq 100 ]];
             then
@@ -197,26 +198,27 @@ then
                 # APT Repository already becomes Kali!!
                 echo "Succeeded in APT update => upgrade!:D";
                 # Proceed apt autoremove to remove obsolete apt resources
-                echo "Cleaning up APT!";
+                echo "1st time Cleaning up APT!";
                 apt autoremove -y;
                 if [[ ${?} -eq 0 ]];
                 then
-                    echo "Succeeded in cleaning up APT trash :D";
-                    echo "Proceeding to apt-get update && apt-get -y upgrade; the 2nd time";
+                    echo "Succeeded in 1st time cleaning up APT trash :D";
+                    echo "Proceeding to 2nd time apt-get update && apt-get -y upgrade; the 2nd time";
                     echo "======================================";
                     echo "======================================";
                 else
-                    echo "Failed to clean up ATPT trash :(";
-                    echo "Let's try to do APT update => upgrade again";
+                    echo "Failed to 1st time clean up ATPT trash :(";
+                    echo "No worries, let's try to do APT update => upgrade again";
                     echo "======================================";
                     echo "======================================";
                     echo "";
                 fi
 
+                # 2nd time apt update && apt -y upgrade
                 apt-get update && apt-get -y upgrade;
                 if [[ ${?} -eq 0 ]];
                 then
-                    echo "Succeeded in apt-get update && apt-get -y upgrade";
+                    echo "Succeeded in 2nd time apt-get update && apt-get -y upgrade";
                     echo "Proceeding 2nd time apt autoremove...";
                     echo "======================================";
                     echo "======================================";
@@ -230,8 +232,8 @@ then
                         echo "======================================";
                         echo "======================================";
                     else
-                        echo "Failed to clean up APT for 2nd time";
-                        echo "You may manually APT clean up";
+                        echo "Failed to 2nd time clean up APT trashes";
+                        echo "You may manually APT clean up!";
                         echo "";
                         echo "======================================";
                         echo "======================================";
@@ -269,379 +271,13 @@ then
                 then
                     echo "Succeeded in disabling Daemon pop-up before Tools installation";
                     echo "Please reboot before running this script to install tools :D!!";
+                    echo "DONE DONE DONE DONE DONE DONE DONE";
+                    exit 0;
                 else
                     echo "Failed to disable Daemon pop-up";
                     echo "Daemon alert may come up during Tools installation";
+                    exit 1;
                 fi
-
-                echo "Continuing to Install Open-source hacking tools :D!";
-                echo "";
-                echo "======================================";
-                echo "======================================";
-                echo "";
-                
-                # Start installing tones of customized hacking tools
-                ## ifconfig must be added to sys variables
-                # net-tools (ifconfig)
-                ##
-                # VIM Editor
-                # mac-robber
-                # SNAP
-                # Git
-                # Docker
-                # Ettercap-graphical
-                # Hydra
-                # Cassandra
-                # Beef-XSS (Beef project)
-                # Metasploit dependencies
-                ## 'tee' 'curl' 'ca-certificates' 'openssl' 'apt-transport-https' 'software-properties-common' 'lsb-release' 'postgresql'
-                #
-                ## Import Metasploit APT Repository on Debian
-                # curl -fsSL https://apt.metasploit.com/metasploit-framework.gpg.key | sudo gpg --dearmor | sudo tee /usr/share/keyrings/metasploit.gpg > /dev/null
-                ## Add Metasploit Repository
-                # echo "deb [signed-by=/usr/share/keyrings/metasploit.gpg] https://apt.metasploit.com/ buster main" | sudo tee /etc/apt/sources.list.d/metasploit.list
-                ## Apt install Metasploit
-                # apt install metasploit-framework
-                ## First-time setup
-                # msfconsole
-                tools=('net-tools'
-                        'tcpdump'
-                        'kaboxer'
-                        'xdg-utils'
-                        'vim'
-                        'libc6'
-                        'libgcc-s1'
-                        'libstdc++6'
-                        'aesfix'
-                        'aeskeyfind'
-                        'libafflib0v5'
-                        'libc6'
-                        'libexpat1'
-                        'libfuse2'
-                        'libgcc-s1'
-                        'libssl3'
-                        'libstdc++6'
-                        'afflib-tools'
-                        'libafflib0v5'
-                        'libafflib-dev'
-                        'build-essential'
-                        'clang'
-                        'clang-14'
-                        'libc6'
-                        'libgcc-s1'
-                        'libpython3.11'
-                        'libstdc++6'
-                        'procps'
-                        'afl++'
-                        'afl++-doc'
-                        'graphviz'
-                        'python3'
-                        'aircrack-ng'
-                        'gawk'
-                        'iproute2'
-                        'iw'
-                        'pciutils'
-                        'procps'
-                        'tmux'
-                        'xterm'
-                        'perl'
-                        'apktool'
-                        'kali-defaults'
-                        'python3-bluez'
-                        'python3-bs4'
-                        'python3-ctypescrypto'
-                        'python3-fleep'
-                        'python3-libarchive-c'
-                        'python3-netifaces'
-                        'python3-pil'
-                        'python3-prettytable'
-                        'python3-pycryptodome'
-                        'python3-requests'
-                        'apple-bleee'
-                        'python3-dicttoxml'
-                        'python3-requests'
-                        'arjun'
-                        'openjdk-11-jre'
-                        'libc6'
-                        'libcap2'
-                        'libpcap0.8'
-                        'arp-scan'
-                        'libnet1'
-                        'libpcap0.8'
-                        'libseccomp2'
-                        'arping'
-                        'adduser'
-                        'gawk'
-                        'init-system-helpers'
-                        'libc6'
-                        'libpcap0.8'
-                        'lsb-base'
-                        'arpwatch'
-                        'libpcap0.8'
-                        'asleap'
-                        'assetfinder'
-                        'libreadline8'
-                        'nmap'
-                        'arp-scan'
-                        'autopsy'
-                        'curl'
-                        'lsof'
-                        'beef-xss'
-                        'hostapd-mana'
-                        'iproute2'
-                        'iw'
-                        'procps'
-                        'libc6'
-                        'libusb-1.0-0'
-                        'libnetfilter-queue1'
-                        'libpcap0.8'
-                        'bettercap'
-                        'bettercap-caplets'
-                        'bettercap-ui'
-                        'wget'
-                        'golang-github-antchfx-htmlquery-dev'
-                        'golang-github-jawher-mow.cli-dev'
-                        'golang-github-saintfish-chardet-dev'
-                        'golang-google-appengine-dev'
-                        'golang-github-antchfx-xmlquery-dev'
-                        'golang-github-kennygrant-sanitize-dev'
-                        'golang-github-temoto-robotstxt-dev'
-                        'golang-github-gobwas-glob-dev'
-                        'golang-github-puerkitobio-goquery-dev'
-                        'golang-golang-x-net-dev'
-                        'golang-github-gocolly-colly-dev'
-                        'unicorn-magic'
-                        'libwireshark17'
-                        'libwiretap-dev'
-                        'libwsutil-dev'
-                        'libwireshark-dev'
-                        'bundler'
-                        'hping3'
-                        'httprobe'
-                        'httpx-toolkit'
-                        'hydra'
-                        'smbclient'
-                        'zsh'
-                        'sudo'
-                        'ca-certificates'
-                        'python3-pip'
-                        'snapd'
-                        'git'
-                        'unzip'
-                        'veil'
-                        'whatmask'
-                        'ruby-interpreter'
-                        'uby-addressable'
-                        'ruby-ipaddress'
-                        'whatweb'
-                        'whois'
-                        'screen'
-                        'wifi-honey'
-                        'cowpatty'
-                        'iptables'
-                        'netmask'
-                        'netsed'
-                        'debconf'
-                        'liblz4-1'
-                        'libnl-genl-3-200'
-                        'liblzo2-2'
-                        'libpam0g'
-                        'libcap-ng0'
-                        'libnl-3-200'
-                        'libpkcs11-helper1'
-                        'openvpn'
-                        'ettercap-graphical'
-                        'libnfc6'
-                        'libnfc-bin'
-                        'forensic-artifacts'
-                        'python3-artifacts'
-                        'rtpflood'
-                        'ruby-multipart-post'
-                        'ruby-awesome-print'
-                        'ruby-iostruct'
-                        'ruby-zhexdump'
-                        'ruby-pedump'
-                        'libdevmapper-event1.02.1'
-                        'liblvm2cmd2.03'
-                        'libdevmapper1.02.1'
-                        'dmeventd'
-                        'rainbowcrack'
-                        'iproute2'
-                        'vlan'
-                        'traceroute'
-                        'ncat'
-                        'commix'
-                        'bruteforce-luks'
-                        'bruteforce-salted-openssl'
-                        'bruteshark'
-                        'brutespray'
-                        'btscanner'
-                        'bulk-extractor'
-                        'bytecode-viewer'
-                        'cabextract'
-                        'cadaver'
-                        'caldera'
-                        'calico'
-                        'capstone'
-                        'ccrypt'
-                        'certgraph'
-                        'certipy-ad'
-                        'cewl'
-                        'changeme'
-                        'chaosreader'
-                        'cherrytree'
-                        'chirp'
-                        'chisel'
-                        'chkrootkit'
-                        'chntpw'
-                        'chromium'
-                        'cifs-utils'
-                        'cillium-cli'
-                        'cisco-audting-tool'
-                        'cisco-ocs'
-                        'cisco-torch'
-                        'cisco7crack'
-                        'clamav'
-                        'cloud-enum'
-                        'cloudbrute'
-                        'cmospwd'
-                        'cmseek'
-                        'cntlm'
-                        'code-oss'
-                        'colly'
-                        'command-not-found'
-                        'commix'
-                        'copy-router-config'
-                        'cosign'
-                        'covenant-kbx'
-                        'cowpatty'
-                        'make'
-                        'crack-common'
-                        'libc6'
-                        'libcrypt1'
-                        'libavcodec60'
-                        'libavformat60'
-                        'mac-robber' 
-                        'snapd' 
-                        'git' 
-                        'docker.io' 
-                        'ettercap-graphical' 
-                        'hydra' 
-                        'cassandra' 
-                        'beef-xss' 
-                        'tee' 
-                        'curl' 
-                        'ca-certificates' 
-                        'openssl' 
-                        'postgresql');
-
-                # Iterate through $tools[@] && Install each tool
-                for tool in ${tools[@]};
-                do
-                    echo "Installing tool: ${tool}";
-                    installTools=$(apt install ${tool} -y);
-                    if [[ ${?} -eq 0 ]];
-                    then
-                        echo "======================================";
-                        echo "";
-                        echo "";
-                        echo "Succeeded in installing ${tool}";
-                        echo "======================================";
-                        echo "======================================";
-                        echo "";
-                        echo "";
-                    else
-                        echo "======================================";
-                        echo "";
-                        echo "";
-                        echo "Failed to install ${tool}";
-                        echo "======================================";
-                        echo "======================================";
-                        echo "";
-                        echo "";
-                    fi
-                done
-
-                userProfile=$(find / -name '.profile' 2>/dev/null | tail -n 1);
-                copyProfile=$(cat ${userProfile} > /home/${user}/.profile);
-                if [[ ${?} -eq 0 ]];
-                then
-                    echo "Succeeded in copying a normal user profile to ${user}'s profile";
-                    echo "${user}'s profile is in /home/${user}/.profile";
-                    echo "=================================";
-                    echo "=================================";
-                    echo "Content of ${user}'s .profile is:";
-                    cat /home/${user}/.profile;
-                    echo "=================================";
-                    echo "=================================";
-                else
-                    echo "Failed to copy a normal user profile to ${user}'s profile";
-                fi
-                # Adding System variables to .profile in your Kernel
-                printf "export PATH=$PATH: /sbin/" >> .profile;
-                ## You should SEE export PATH=/usr/local/bin:/usr/bin:/usr/local/games:/usr/games: /sbin/
-                ## At the end of your .profile
-                targetTailProfile='export PATH=/usr/local/bin:/usr/bin:/usr/local/games:/usr/games: /sbin/'
-                checkPATH=$(tail -n 1 .profile);
-                if [[ ${targetTailProfile} -eq ${checkPath} ]];
-                then   
-                    echo "=================================";
-                    echo "Succeeded in updating SYS PATH :D!";
-                    echo "=================================";
-                else
-                    echo "=================================";
-                    echo "Failed to update SYS PATH :(";
-                    echo "You have to update SYS PATH yourself :(";
-                    echo "=================================";
-                fi
-
-                # Add back all Debian repositories after turning Debian into Kali
-                #printf "\n\ndeb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware\ndeb-src https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware\n\ndeb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware\ndeb-src https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware\n\ndeb https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware\ndeb-src https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware\n\ndeb https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware\ndeb-src https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware\n\ndeb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware\ndeb-src https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware" >> ${aptPath};
-
-                # if [[ ${?} -eq 0 ]];
-                # then
-                    
-                #     echo "Succeeded in adding back Debian repositories! :D";
-                #     echo "Proceeding to final apt update && apt -y upgrade!! :D";
-
-                    
-                #     apt update && apt -y upgrade;
-
-                #     if [[ ${?} -eq 0 ]];
-                #     then
-                #         echo "Succeeded in apt update && apt -y upgrade :D";
-                #         echo "Proceeding to apt autoremove -y;";
-                #         apt autoremove -y;
-                #         if [[ ${?} -eq 0 ]];
-                #         then
-                #             echo "Succeeded in APT clean up :D";
-                #             echo "apt update && apt -y upgrade again :D";
-                #             apt update && apt -y upgrade;
-                #             if [[ ${?} -eq 0 ]];
-                #             then
-                #                 echo "Final apt update && apt -y upgrade OK!";
-                #             else
-                #                 echo "Failed to last apt update && apt -y upgrade :(";
-                #                 echo "You may manually perform apt update && apt -y upgrade";
-                #             fi
-                #         else
-                #             echo "Failed to APT clean up :(";
-                #             echo "You may apt autoremove -y manually";
-                #         fi
-                #     else
-                #         echo "Failed to apt update && apt -y upgrade after adding back Debian repositories :(";
-                #         echo "You may apt update && apt -y upgrade manually :D";                        
-                #     fi   
-                # else
-                #     echo "Failed to add back Debian repositories :(";
-                #     echo "You may manually add back those :)";
-                # fi
-                ##################################################
-                # Exit with 0 after all processes have completed
-                #################################################
-                echo "Succeeded in completing this script";
-                echo "Exiting with 0...";
-                exit 0;
 
             else
                 echo "We feel sorry that your Debian did NOT become a Kali Linux :(";
@@ -652,13 +288,16 @@ then
         else
             echo "Failed to customize this Debian repo to Kali repo...";
             echo "Exiting...";
+            exit 1;
         fi
 
     else
         echo "Failed to back up existing Apt repo";
         echo "Skipping Debian customization...";
+        exit 1;
     fi
 else
     echo "You aren't ROOT";
     echo "Exiting...";
+    exit 1;
 fi
