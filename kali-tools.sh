@@ -136,6 +136,9 @@ then
             'perl'
             'apktool'
             'kali-defaults'
+            'python3-selenium'
+            'python3-scapy'
+            'python3-jedi'
             'python3-bluez'
             'python3-bs4'
             'python3-ctypescrypto'
@@ -354,11 +357,12 @@ then
 
     if [[ ${?} -eq 0 ]];
     then
-        echo "Succeeded in install tools";
+        echo "Succeeded in installing all tools";
         echo "Exiting...";
         exit 0;
     else   
-        echo "Failed to install tools...";
+        echo "Failed to install all tools...";
+        echo "Exiting with 1...";
         exit 1;
     fi
 
