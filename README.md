@@ -4,11 +4,11 @@
 ## We are here to learn how to craft our own Kali Linux 
 ## from a plain 0 Debian Linux :D
 ##
-## git clone https://github.com/phoenixyork166/Crafting-Kali-DIY.git
+## git clone https://github.com/berlinlee-phoenix/Crafting-Kali-DIY.git
 ##
 ## chmod 755 ./Crafting-Kali-DIY;
 ## cd ./Crafting-Kali-DIY && chmod 777 ./*.sh;
-## sudo bash customize.sh;
+## sudo bash kali-tools.sh;
 ## 
 ## After reboot
 ## cd ./Crafting-Kali-DIY && sudo bash install-tools.sh;
